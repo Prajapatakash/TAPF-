@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akshaya Patra Complaint Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <div id="home-page" class="page">
+            <header>
+                <h1>The Akshaya Patra Foundatio</h1>
+                <p>Maintenance Complaint Portal</p>
+            </header>
+            <main class="home-main">
+                <div class="home-option" id="add-complaint-btn">
+                    <h2>Add Complaint</h2>
+                    <p>Submit a maintenance request directly.</p>
+                </div>
+                <div class="home-option" id="manage-complaints-btn">
+                    <h2>Manage Complaints</h2>
+                    <p>For authorized maintenance personnel only.</p>
+                </div>
+            </main>
+        </div>
+
+        <div id="login-page" class="page hidden">
+            <header>
+                <button class="back-btn pretty-back" data-target="home-page">&#8592; Back</button>
+                <h1 id="login-title">Admin Login</h1>
+            </header>
+            <main class="form-container">
+                <form id="auth-form">
+                    <p id="auth-error" class="error-message"></p>
+                    <input type="email" id="email" placeholder="Email Address" required>
+                    <input type="password" id="password" placeholder="Password" required>
+                    <button type="submit" id="login-submit-btn">Login</button>
+                </form>
+            </main>
+        </div>
+
+        <div id="user-dashboard-page" class="page hidden">
+            <header>
+                <button class="back-btn pretty-back" data-target="home-page">&#8592; Home</button>
+                <h1>Submit a Complaint</h1>
+                <p>Please select the area where the issue is located.</p>
+            </header>
+            <main class="sections-container">
+                <div class="section-card" data-section="Kitchen Area">Kitchen Area</div>
+                <div class="section-card" data-section="Admin Hall">Admin Hall</div>
+                <div class="section-card" data-section="Warehouse & Logistics">Warehouse & Logistics</div>
+                <div class="section-card" data-section="Utilities & Infrastructure">Utilities & Infrastructure</div>
+            </main>
+        </div>
+
+        <div id="complaint-form-page" class="page hidden">
+            <header>
+                <button class="back-btn pretty-back" data-target="user-dashboard-page">&#8592; Sections</button>
+                <h1 id="complaint-form-title">New Complaint: Kitchen Area</h1>
+            </header>
+            <main class="form-container">
+                <form id="complaint-form">
+                    <input type="text" id="complainant-name" placeholder="Your Name" required>
+                    <input type="tel" id="complainant-mobile" placeholder="Mobile Number" pattern="[0-9]{10}" maxlength="10" required>
+                    <input type="text" id="appliance-name" placeholder="Appliance/Asset Name (e.g., Cauldron 2)" required>
+                    <textarea id="problem-description" rows="5" placeholder="Please describe the problem in detail" required></textarea>
+                    <label for="problem-image">Add an Image (Optional)</label>
+                    <input type="file" id="problem-image" accept="image/*">
+                    <button type="submit">Submit Complaint</button>
+                </form>
+            </main>
+        </div>
+        
+        <div id="admin-dashboard-page" class="page hidden">
+            <header>
+                <button class="back-btn pretty-back" data-target="home-page">&#8592; Logout</button>
+                <h1>Admin: Manage Complaints</h1>
+            </header>
+            <main class="admin-main">
+                <div class="complaint-column">
+                    <h2>Pending Complaints <span id="pending-count" class="count-badge">0</span></h2>
+                    <div id="pending-complaints" class="card-container"></div>
+                </div>
+                <div class="complaint-column">
+                    <h2>Ongoing Complaints <span id="ongoing-count" class="count-badge">0</span></h2>
+                    <div id="ongoing-complaints" class="card-container"></div>
+                </div>
+                <div class="complaint-column">
+                    <h2>Resolved Complaints <span id="resolved-count" class="count-badge">0</span></h2>
+                    <div id="resolved-complaints" class="card-container"></div>
+                </div>
+            </main>
+        </div>
+
+        <div id="complaint-detail-modal" class="modal-overlay hidden">
+            <div class="modal-content">
+                <h2 id="modal-title">Complaint Details</h2>
+                <p><strong>Name:</strong> <span id="modal-name"></span></p>
+                <p><strong>Mobile No:</strong> <span id="modal-mobile"></span></p>
+                <p><strong>Appliance/Asset:</strong> <span id="modal-appliance"></span></p>
+                <p><strong>Full Description:</strong></p>
+                <p id="modal-description"></p>
+                <p><strong>Date:</strong> <span id="modal-date"></span></p>
+                <button id="modal-close-btn">Close</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
