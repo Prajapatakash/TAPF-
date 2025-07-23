@@ -287,12 +287,14 @@ document.addEventListener('DOMContentLoaded', () => {
         },
     body: JSON.stringify(newComplaint)
 })
-.then(res => res.text())
+.then(res => res.json())
 .then(data => {
     console.log('Complaint submitted to Google Sheets:', data);
+    alert("Complaint submitted and sent to Google Sheets!");
 })
 .catch(err => {
     console.error('Error submitting to Google Sheets:', err);
+    alert("Complaint saved locally, but failed to send to Google Sheets.");
 });
 
         
