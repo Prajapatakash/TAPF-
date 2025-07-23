@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
             complaint.status = 'resolved';
             saveData();
             // Send to Google Sheets
-            fetch('https://script.google.com/macros/s/AKfycbzo3iVZA4Q7K9mVXcMeE-RwBwTF6_PzpxFf_wRewsrYGk1HePg0d-0LQzhFxRDrABzPWA/exec', {
+            fetch('https://script.google.com/macros/s/AKfycbyVjiwfXVYE5P9sqEZAovcruWV_q8-0yvWqJsJLd5qoKT0q9yeFSOAHDYJeTO-f3c-YiQ/exec', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -279,6 +279,23 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         state.complaints.push(newComplaint);
         saveData();
+        // Send new complaint to Google Sheets
+        fetch('https://script.google.com/macros/s/AKfycbyVjiwfXVYE5P9sqEZAovcruWV_q8-0yvWqJsJLd5qoKT0q9yeFSOAHDYJeTO-f3c-YiQ/exec', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+        },
+    body: JSON.stringify(newComplaint)
+})
+.then(res => res.text())
+.then(data => {
+    console.log('Complaint submitted to Google Sheets:', data);
+})
+.catch(err => {
+    console.error('Error submitting to Google Sheets:', err);
+});
+
+        
         alert("Complaint submitted successfully!");
         complaintForm.reset();
         showPage('home-page');
@@ -287,9 +304,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // Modal
     modalCloseBtn.addEventListener('click', () => modal.classList.add('hidden'));
 
-    // --- INITIALIZATION ---
-    loadData();
-    showPage('home-page');
+    fetch('https://script.google.com/macros/s/AKfycbyVjiwfXVYE5P9sqEZAovcruWV_q8-0yvWqJsJLd5qoKT0q9yeFSOAHDYJeTO-f3c-YiQ/exec')
+  .then(res => res.json())
+  .then(data => {
+      state.complaints = data;
+      showPage('home-page');
+  })
+  .catch(err => {
+      console.error("Error loading complaints:", err);
+      showPage('home-page');
+  });
+
 
     function deleteComplaint(complaintId) {
         state.complaints = state.complaints.filter(c => c.id !== complaintId);
